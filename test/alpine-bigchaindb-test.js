@@ -128,16 +128,21 @@ describe('artusvranken/alpine-bigchaindb docker image', function () {
             // Sign transaction.
             const signedTransaction = driver.Transaction.signTransaction(unsignedCreateTransaction, alice.privateKey);
 
+            console.log("Posting create transaction.");
             // Post transaction.
             conn.postTransaction(signedTransaction).then(response => {
 
+                console.log("Polling for status.");
                 // Poll for status.
                 return conn.pollStatusAndFetchTransaction(response.id);
             }).then(whatever => {
 
+                console.log("retrieving transactions from alice.");
                 // Retrieve the latest transaction performed by alice.
                 return conn.listOutputs(alice.publicKey, false);
             }).then(response => {
+
+                console.log("retrieved transactions: " + reponse.length);
 
                 const latestTransaction = response[response.length - 1];
 
@@ -151,12 +156,15 @@ describe('artusvranken/alpine-bigchaindb docker image', function () {
                 // Sign the transfer transaction.
                 const signedTransferTransaction = driver.Transaction.signTransaction(transferTransaction, alice.privateKey);
 
+                console.log("Posting transfer transaction.");
                 return conn.postTransaction(signedTransferTransaction);
             }).then(postedTransaction => {
 
+                console.log("Fetching status.");
                 return conn.pollStatusAndFetchTransaction(postedTransaction.id);
             }).then(response => {
 
+                console.log("done.");
                 done();
             }).catch(error => {
                 done(new Error(error));
@@ -192,10 +200,6 @@ describe('artusvranken/alpine-bigchaindb docker image', function () {
 
                 // Poll for status.
                 return conn.pollStatusAndFetchTransaction(response.id);
-            }).then(whatever => {
-
-                // Check if the asset was posted.
-                return conn.listOutputs(alice.publicKey);
             }).then(response => {
 
                 // Retrieve the latest transaction performed by alice.
