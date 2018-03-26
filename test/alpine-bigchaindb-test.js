@@ -135,10 +135,6 @@ describe('artusvranken/alpine-bigchaindb docker image', function () {
                 return conn.pollStatusAndFetchTransaction(response.id);
             }).then(whatever => {
 
-                // Check if the asset was posted.
-                return conn.listOutputs(alice.publicKey);
-            }).then(response => {
-
                 // Retrieve the latest transaction performed by alice.
                 return conn.listOutputs(alice.publicKey, false);
             }).then(response => {

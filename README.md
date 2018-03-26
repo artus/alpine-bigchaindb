@@ -1,5 +1,7 @@
 # alpine-bigchaindb
 
+[![Build Status](https://travis-ci.org/artusvranken/alpine-bigchaindb.svg?branch=master)](https://travis-ci.org/artusvranken/alpine-bigchaindb)
+
 ## A small docker image for bigchaindb running on alpine.
 
 > This project is still in alpha, please test extensively before using it 'for real'.
