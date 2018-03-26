@@ -20,6 +20,7 @@ describe('artusvranken/alpine-bigchaindb docker image', function () {
     describe('Create transactions (adding assets)', function () {
 
         it('should add assets when done correctly', function (done) {
+            this.timeout(10000);
 
             // Create a new asset.
             const assetData = {
@@ -62,6 +63,8 @@ describe('artusvranken/alpine-bigchaindb docker image', function () {
         });
 
         it('should fail when not done correctly', function (done) {
+            this.timeout(10000);
+
             // Create a new asset.
             const assetData = "incorrect";
 
@@ -102,6 +105,7 @@ describe('artusvranken/alpine-bigchaindb docker image', function () {
     describe('Transfer transactions', function () {
 
         it('should transfer assets when done correctly', function (done) {
+            this.timeout(10000);
 
             // Create a new asset.
             const assetData = {
@@ -177,6 +181,7 @@ describe('artusvranken/alpine-bigchaindb docker image', function () {
         });
 
         it('should fail when done incorrectly', function () {
+            this.timeout(10000);
 
             // Create a new asset.
             const assetData = {
