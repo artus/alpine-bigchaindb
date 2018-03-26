@@ -142,7 +142,7 @@ describe('artusvranken/alpine-bigchaindb docker image', function () {
                 return conn.listOutputs(alice.publicKey, false);
             }).then(response => {
 
-                console.log("retrieved transactions: " + reponse.length);
+                console.log("retrieved transactions: " + response.length);
 
                 const latestTransaction = response[response.length - 1];
 
