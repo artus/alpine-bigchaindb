@@ -128,29 +128,23 @@ describe('artusvranken/alpine-bigchaindb docker image', function () {
             // Sign transaction.
             const signedTransaction = driver.Transaction.signTransaction(unsignedCreateTransaction, alice.privateKey);
 
-            console.log("Posting create transaction.");
             // Post transaction.
             conn.postTransaction(signedTransaction).then(response => {
 
-                console.log("Polling for status.");
                 // Poll for status.
                 return conn.pollStatusAndFetchTransaction(response.id);
             }).then(whatever => {
 
-                console.log("retrieving transactions from alice.");
                 // Retrieve the latest transaction performed by alice.
                 return conn.listOutputs(alice.publicKey, false);
             }).then(response => {
 
-                console.log("retrieved transactions: " + response.length);
 
                 const latestTransactionOutput = response[response.length - 1];
 
                 return conn.getTransaction(latestTransactionOutput.transaction_id);
             }).then(latestTransaction => {
 
-                console.log("extracted, creating:");
-                console.log(latestTransaction);
 
                 // perform transfer transaction on latest asset.
                 const transferTransaction = driver.Transaction.makeTransferTransaction(
@@ -159,20 +153,16 @@ describe('artusvranken/alpine-bigchaindb docker image', function () {
                     { 'action': 'transfer to bob' }
                 );
 
-                console.log("Signing transaction");
 
                 // Sign the transfer transaction.
                 const signedTransferTransaction = driver.Transaction.signTransaction(transferTransaction, alice.privateKey);
 
-                console.log("Posting transfer transaction.");
                 return conn.postTransaction(signedTransferTransaction);
             }).then(postedTransaction => {
 
-                console.log("Fetching status.");
                 return conn.pollStatusAndFetchTransaction(postedTransaction.id);
             }).then(response => {
 
-                console.log("done.");
                 done();
             }).catch(error => {
                 done(new Error(error));
