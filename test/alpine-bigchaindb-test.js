@@ -50,14 +50,14 @@ describe('artusvranken/alpine-bigchaindb docker image', function() {
             }).then( whatever => {
                 
                 // Check if the asset was posted.
-                return conn.listOutputs(alice.publicKey, 'CREATE');
+                return conn.listOutputs(alice.publicKey);
             }).then(response => {
 
                     // We do so by checking if there is exactly one transaction.
                     if (response.length == 1) done();
                     else (done(new Error("Length was not 1.")));
             }).catch(error => {
-                done(error);
+                done( new Error(error));
             })
         });
 
