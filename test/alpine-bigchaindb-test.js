@@ -140,7 +140,10 @@ describe('artusvranken/alpine-bigchaindb docker image', function () {
 
                 console.log("retrieved transactions: " + response.length);
 
-                const latestTransaction = response[response.length - 1];
+                const latestTransactionOutput = response[response.length - 1];
+
+                return conn.getTransaction(latestTransactionOutput.transaction_id);
+            }).then(latestTransaction => {
 
                 console.log("extracted, creating:");
                 console.log(latestTransaction);
