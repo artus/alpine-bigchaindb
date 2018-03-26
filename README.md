@@ -1,4 +1,4 @@
-#alpine-bigchaindb
+# alpine-bigchaindb
 
 ## A small docker image for bigchaindb running on alpine.
 
@@ -13,5 +13,11 @@
 You can run the image by using the same steps listed on [the documentation of bigchaindb.](https://docs.bigchaindb.com/projects/server/en/latest/appendices/run-with-docker.html)
 
 ```shell
-docker run -d --name=bigchaindb -p 59984:9984 --restart=always -v $HOME/bigchaindb_docker:/data artusvranken/alpine-bigchaindb start
+docker run -d  \
+           --name=bigchaindb \
+           -p 59984:9984 \
+           --restart=always \ 
+           -v $HOME/bigchaindb_docker:/data \
+           artusvranken/alpine-bigchaindb \
+           start
 ```
