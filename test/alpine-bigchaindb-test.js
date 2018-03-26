@@ -63,14 +63,10 @@ describe('artusvranken/alpine-bigchaindb docker image', function () {
 
         it('should fail when not done correctly', function (done) {
             // Create a new asset.
-            const assetData = {
-                'testAsset': 'This is a test-asset.'
-            };
+            const assetData = "incorrect";
 
             // Create metadata.
-            const metaData = {
-                'date': new Date()
-            }
+            const metaData = "incorrect";
 
             // Create transaction.
             const unsignedCreateTransaction = driver.Transaction.makeCreateTransaction(
@@ -80,8 +76,8 @@ describe('artusvranken/alpine-bigchaindb docker image', function () {
                 alice.publicKey
             );
 
-            // Sign transaction with an incorrect private key
-            const signedTransaction = driver.Transaction.signTransaction(unsignedCreateTransaction, bob.privateKey);
+            // Sign transaction
+            const signedTransaction = driver.Transaction.signTransaction(unsignedCreateTransaction, alice.privateKey);
 
             // Post transaction.
             conn.postTransaction(signedTransaction).then(response => {
@@ -95,7 +91,7 @@ describe('artusvranken/alpine-bigchaindb docker image', function () {
             }).then(response => {
 
                 // We do so by checking if there is exactly one transaction.
-                if (response.length == 1) done(new Error("incorrect transaction was added."));
+                if (response.length == 2) done(new Error("incorrect transaction was added."));
                 else (done());
             }).catch(error => {
                 done();
@@ -146,12 +142,17 @@ describe('artusvranken/alpine-bigchaindb docker image', function () {
 
                 const latestTransaction = response[response.length - 1];
 
+                console.log("extracted, creating:");
+                console.log(latestTransaction);
+
                 // perform transfer transaction on latest asset.
                 const transferTransaction = driver.Transaction.makeTransferTransaction(
                     [{ tx: latestTransaction, output_index: 0 }],
                     [driver.Transaction.makeOutput(driver.Transaction.makeEd25519Condition(bob.publicKey))],
                     { 'action': 'transfer to bob' }
                 );
+
+                console.log("Signing transaction");
 
                 // Sign the transfer transaction.
                 const signedTransferTransaction = driver.Transaction.signTransaction(transferTransaction, alice.privateKey);
