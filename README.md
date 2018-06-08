@@ -8,7 +8,7 @@
 
 ## Why alpine linux?
 
-![filesize difference between running on ubuntu and alpine](https://artusvranken.github.io/alpine-bigchaindb/img/filesize.png)
+![filesize difference between running on ubuntu and alpine](https://artus.github.io/alpine-bigchaindb/img/filesize.png)
 
 ## How to run
 
